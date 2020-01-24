@@ -1,0 +1,34 @@
+<div class="comments-wrapper">
+    <mat-card *ngFor="let comment of comments; let i = index" class="comment-section">
+        <div class="comment-content-wrapper">
+            <div class="comment-profile-image">
+                <img src="../assets/img/profile-placeholder.png">
+            </div>
+            <div>
+                <p class="comment-text">
+                    <span class="comment-name-author">{{ comment.username }}</span> &#183; {{ comment.content }}
+                </p>
+                <div class="comment-date">{{ comment.createdAt | convertTimeFormat }}</div>
+            </div>
+        </div>
+        <div class="action-button-wrapper">
+            <mat-icon class="edit" (click)="handleBeginEdit(comment)">edit</mat-icon>
+            <mat-icon class="delete" (click)="handleDeleteComment(i)">delete</mat-icon>
+        </div>
+    </mat-card>
+
+    <div class="comment-form">
+        <mat-form-field>
+            <textarea
+                (keyup.enter)="handleAddComment()"
+                matInput
+                cdkTextareaAutosize
+                [formControl]="commentFormControl"
+                placeholder="Write a comment..."
+                #autosize="cdkTextareaAutosize"
+                ></textarea>
+        </mat-form-field>
+        <mat-icon *ngIf="isEditing" (click)="handleEditComment()">edit</mat-icon>
+        <mat-icon *ngIf="!isEditing" (click)="handleAddComment()">add_comment</mat-icon>
+    </div>
+</div>
